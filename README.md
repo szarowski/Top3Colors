@@ -12,7 +12,7 @@ The minimum requirements for Java is Java 11 due to the new efficient asynchrono
 The project is build in Gradle, use:
 ```
 ./gradlew clean build
-java -jar build/libs/Top3Colors-1.0-SNAPSHOT.jar input.txt
+java -jar build/libs/Top3Colors-1.0-SNAPSHOT.jar input.txt output.csv
 ```
 Running the application with no parameter shows a simple help with parameters description:
 ```
@@ -21,12 +21,12 @@ java -jar build/libs/Top3Colors-1.0-SNAPSHOT.jar
 
 Minimum recommended heap memory is 768 MB:
 ```
-java -Xmx768M -jar build/libs/Top3Colors-1.0-SNAPSHOT.jar input.txt
+java -Xmx768M -jar build/libs/Top3Colors-1.0-SNAPSHOT.jar input.txt output.csv
 ```
 
 Running with 2048 MB heap memory on 2 cores:
 ```
-java -Xmx2048M -jar build/libs/Top3Colors-1.0-SNAPSHOT.jar input.txt 2
+java -Xmx2048M -jar build/libs/Top3Colors-1.0-SNAPSHOT.jar input.txt output.csv 2
 ```
  
 ## Design notes
