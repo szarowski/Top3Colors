@@ -1,0 +1,25 @@
+plugins {
+    id 'java'
+}
+
+group 'com.colors'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = JavaVersion.VERSION_11
+targetCompatibility = JavaVersion.VERSION_11
+
+repositories {
+    mavenCentral()
+}
+
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'com.colors.Top3Colors'
+        )
+    }
+}
+
+dependencies {
+    testImplementation 'junit:junit:4.12'
+}
