@@ -7,10 +7,8 @@ import org.junit.runner.RunWith;
 import org.junit.runners.BlockJUnit4ClassRunner;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
+import java.io.File;
 import java.io.PrintStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -23,7 +21,8 @@ public class Top3ColorsTest {
     private final PrintStream originalOut = System.out;
     private final PrintStream originalErr = System.err;
 
-    private final String output = getClass().getClassLoader().getResource(".").getFile() + "output.csv";
+    private final String output = new File(getClass().getClassLoader().getResource("output.csv").getFile())
+            .getAbsolutePath();
 
     @Before
     public void setUpStreams() {
@@ -32,15 +31,15 @@ public class Top3ColorsTest {
     }
 
     @After
-    public void restoreStreams() throws IOException {
+    public void restoreStreams() {
         System.setOut(originalOut);
         System.setErr(originalErr);
-        Files.deleteIfExists(Path.of(output));
     }
 
     @Test
     public void testTop3Colors_Success() {
-        Top3Colors.main(new String[]{getClass().getClassLoader().getResource("urls.txt").getFile(), output});
+        Top3Colors.main(new String[]{new File(getClass().getClassLoader().getResource("urls.txt").getFile())
+                .getAbsolutePath(), output});
         assertTrue(outContent.toString().contains("Finished processing URLs"));
         assertTrue(errContent.toString().isEmpty());
     }
@@ -86,7 +85,8 @@ public class Top3ColorsTest {
 
     @Test
     public void testTop3Colors_IncorrectLink_InvalidLink() {
-        Top3Colors.main(new String[]{getClass().getClassLoader().getResource("invalid_link.txt").getFile(), output});
+        Top3Colors.main(new String[]{new File(getClass().getClassLoader().getResource("invalid_link.txt").getFile())
+                .getAbsolutePath(), output});
         assertFalse(outContent.toString().contains("Finished processing URLs"));
         assertFalse(errContent.toString().isEmpty());
         assertTrue(errContent.toString().startsWith("Cannot process a URL"));
@@ -94,7 +94,8 @@ public class Top3ColorsTest {
 
     @Test
     public void testTop3Colors_IncorrectLink_NoImage() {
-        Top3Colors.main(new String[]{getClass().getClassLoader().getResource("no_image.txt").getFile(), output});
+        Top3Colors.main(new String[]{new File(getClass().getClassLoader().getResource("no_image.txt").getFile())
+                .getAbsolutePath(), output});
         assertFalse(outContent.toString().contains("Finished processing URLs"));
         assertFalse(errContent.toString().isEmpty());
         assertTrue(errContent.toString().startsWith("Cannot process a URL"));
